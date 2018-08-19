@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.io.UnsupportedEncodingException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,5 +44,16 @@ public class PCCoreWebServiceTest {
 		System.out.println(result);
 	}
 	
-	
+	//http://localhost:8081/core/computer/all
+	@Test
+	public void whenGetAllComputer() throws UnsupportedEncodingException, Exception {
+		String result = mockMvc.perform(get("/computer/all").
+				contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.length()").value(10))
+				.andReturn().getResponse()
+				.getContentAsString();
+
+		System.out.println(result);
+	}
 }
